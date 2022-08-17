@@ -1,4 +1,4 @@
-import "./App.css";
+import "../App.css";
 import {
   Box,
   Button,
@@ -13,8 +13,8 @@ import illustration from "./images/illustration_image.png";
 import { useState } from "react";
 import axios from "axios";
 
-function ContactUs() {
-  const [open, setOpen] = useState(false);
+const ContactUs= ({open, setOpen}) =>  {
+  // const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -66,16 +66,7 @@ function ContactUs() {
   return (
     <div className="outer">
       <Box
-        sx={{
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
       >
-        <Button onClick={handleOpen} variant="contained">
-          Open Form
-        </Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -117,7 +108,7 @@ function ContactUs() {
                   color: "#2A398C",
                 }}
               >
-                Get Everything You Need For Creating WordPress Websites
+                Connect with us by typing in the form
               </Typography>
               <img alt="illustration_image" src={illustration} style={{ width: "70%", height: "70%" }} />
               <Typography
@@ -127,8 +118,8 @@ function ContactUs() {
                 fontWeight={100}
                 sx={{ width: "80%", textAlign: "center", mb: 3 }}
               >
-                All in one Multifunctional Subscribe Service Perfect for
-                Launching All Kinds WordPress Projects
+                Our response is blazing fast and we are devoted to
+                resolve your queries.
               </Typography>
             </Box>
 
@@ -164,7 +155,7 @@ function ContactUs() {
                 }}
                 fontFamily="Poppins"
               >
-                SUBSCRIBE AND GET YOUR BONUS!
+                Connect with Us !
               </Typography>
 
               <TextField
@@ -252,7 +243,7 @@ function ContactUs() {
                 }}
                 onClick={handleSubmit}
               >
-                STAY UPDATED
+                SUBMIT
               </Button>
 
               {info === true ? (
