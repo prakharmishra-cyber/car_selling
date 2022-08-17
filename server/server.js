@@ -39,6 +39,19 @@ app.post('/userdetails', async(req, res)=>{
     }catch(error) {
         res.status(404).json({message: error.message});
     }
+});
+
+app.get('/users', async(req, res)=> {
+    try {
+        const data  = await user.find({});
+        res.status(200).json({
+            data:data
+        })
+    } catch (error) {
+        res.status(404).json({
+            message:error.message
+        });
+    }
 })
 
 app.listen(port, ()=>{
