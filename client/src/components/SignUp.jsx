@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import {createUserWithEmailAndPassword, getAuth} from  "firebase/auth";
 import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 function Copyright(props) {
   return (
@@ -43,6 +44,9 @@ export default function SignUp() {
     const data = new FormData(event.currentTarget);
     const email =data.get('email');
     const password = data.get('password');
+    const firstName = data.get('firstName');
+    const lastName = data.get('lastName');
+
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -54,6 +58,19 @@ export default function SignUp() {
         var errorCode = error.code;
         var errorMessage = error.message;
         console.log(errorMessage, errorCode);
+      });
+
+      axios
+      .post("https://car-app-new-app.herokuapp.com/userdetails", {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 

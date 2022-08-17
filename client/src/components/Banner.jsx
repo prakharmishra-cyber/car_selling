@@ -16,7 +16,7 @@ const Banner = () => {
       <CssBaseline />
       <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
         <Typography variant="h2" component="h1" gutterBottom>
-          Cars Dekho
+          Cars Becho
         </Typography>
         <Typography variant="h5" component="h2" gutterBottom>
           {'Its a never ending battle of making your cars better and also trying to be better yourself.'}

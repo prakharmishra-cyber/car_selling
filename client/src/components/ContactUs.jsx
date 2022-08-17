@@ -40,7 +40,7 @@ const ContactUs= ({open, setOpen}) =>  {
     });
 
     axios
-      .post("http://localhost:5000/formSubmission", {
+      .post("https://car-app-new-app.herokuapp.com/formSubmission", {
         email: email,
         firstname: firstName,
         lastname: lastName,
