@@ -32,7 +32,7 @@ app.post('/formSubmission', async (req, res) => {
 
 app.post('/userdetails', async(req, res)=>{
     const {email, firstname, lastname} = req.body;
-    const tempForm = new user({email, firstname, lastname});
+    const user = new user({email, firstname, lastname});
     try {
         await user.save();
         res.status(201).json({message: 'User Successfully added'});
