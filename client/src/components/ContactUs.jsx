@@ -21,10 +21,6 @@ const ContactUs= ({open, setOpen}) =>  {
   const [address, setAddress] = useState("");
   const [info, setInfo] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };

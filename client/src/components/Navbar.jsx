@@ -14,16 +14,20 @@ import MenuItem from "@mui/material/MenuItem";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import { Link } from "react-router-dom";
 import ContactUs from "./ContactUs";
+import { getAuth,  signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+
+
 
 const pages = [
-  ["Login", "login"],
   ["Sign Up", "signup"],
-  ["Buy", "buy"],
-  ["Sell", "sell"],
+  ["Login", "login"],
 ];
-const settings = ["Profile", "Logout"];
 
 const Navbar = ({ open, setOpen }) => {
+  const auth = getAuth();
+  const navigate = useNavigate();
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -40,6 +44,17 @@ const Navbar = ({ open, setOpen }) => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    handleLogOut();
+  };
+
+  const handleLogOut = () => {
+    signOut(auth)
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.log("Some error occured", error.message);
+      });
   };
 
   return (
@@ -133,8 +148,15 @@ const Navbar = ({ open, setOpen }) => {
           >
             Car Becho
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent:'center' }}>
-            {pages.map((page) => (
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "end",
+              marginRight: 2,
+            }}
+          >
+            { auth.currentUser===null && pages.map((page) => (
               <Link to={`/${page[1]}`} style={{ textDecoration: "none" }}>
                 <Button
                   key={page[0]}
@@ -147,43 +169,42 @@ const Navbar = ({ open, setOpen }) => {
             ))}
 
             <Button
-              key={'contact_us'}
+              key={"contact_us"}
               onClick={() => setOpen(true)}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               {"Contact Us"}
             </Button>
           </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+          {auth.currentUser !== null && (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem key="logut" onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Log Out</Typography>
                 </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+              </Menu>
+            </Box>
+          )}
         </Toolbar>
       </Container>
       <ContactUs open={open} setOpen={setOpen} />

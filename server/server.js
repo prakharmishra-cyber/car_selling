@@ -4,6 +4,7 @@ const port = process.env.PORT || 5000;
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const formData = require('./models/FormData');
+const user = require('./models/User');
 const colors = require('colors');
 
 const app = express();
@@ -20,20 +21,25 @@ app.get('/', (req, res)=>{
 
 app.post('/formSubmission', async (req, res) => {
     const {email, firstname, lastname, address} = req.body;
-    //console.log(req);
-
     const tempForm = new formData({email, firstname, lastname, address});
-
     try {
         await tempForm.save();
         res.status(201).json({message: 'Form Successfully Submitted'});
     }catch(error) {
         res.status(404).json({message: error.message});
     }
-
-
-
 });
+
+app.post('/userdetails', async(req, res)=>{
+    const {email, firstname, lastname} = req.body;
+    const tempForm = new user({email, firstname, lastname});
+    try {
+        await user.save();
+        res.status(201).json({message: 'User Successfully added'});
+    }catch(error) {
+        res.status(404).json({message: error.message});
+    }
+})
 
 app.listen(port, ()=>{
     console.log(`Server is running on port ${port}`.cyan.underline.bold);
