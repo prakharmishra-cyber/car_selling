@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+.outer {
+  background-image: url("./images/bg_image.jpeg");
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
